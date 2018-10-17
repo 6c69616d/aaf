@@ -1,0 +1,6 @@
+{ "classes":[
+    { "room":"9310", "subject":"Fundamentals of Programming", "start":"10:00", "time":1 },
+    { "room":"521", "subject":"Programming for Beginners", "start":"10:00", "time":1 },
+    { "room":"9306", "subject":"Networking and Server Administration", "start":"14:00", "time":2 },
+    { "room":"310", "subject":"Fundamentals of Programming", "start":"15:00", "time":1 }
+]}
