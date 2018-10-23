@@ -19,7 +19,8 @@ newReleases = [
 //console.log(newReleases.filter( newReleases => newReleases.rating == 5 ))//4b
 
 
-console.log(newReleases.filter( newReleases => newReleases.rating == 5 ) )
-newReleases.forEach(x => releases.push([x.id, x.title]))
-console.log(releases)
+newReleases.filter( newReleases => newReleases.rating == 5 ).forEach(x => releases.push([x.id, x.title]))
+console.log(releases)//4c
+
+
 
