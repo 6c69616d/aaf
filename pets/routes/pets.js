@@ -6,14 +6,25 @@ var upload = multer();
 var dal = require('../dal/dal');
 
 router.get('/pet', function(req, res, next) {
+    res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000")
     dal.getAllPets(req, res, function(stat, err, data) {
-        return res.json({ status:stat, data:data, error:err });
+    if(err){
+        return res.json({ success:false, error:err });
+    }
+    else{
+        return res.json({ success:true, data:data });
+    }
     });
 });
 
 router.get('/pet/:id', function(req, res, next) {
     dal.getPetById(req, res, function(stat, err, data) {
-        return res.json({ status:stat, data:data, error:err });
+        if(err){
+            return res.json({ success:false, error:err });
+        }
+        else{
+            return res.json({ success:true, data:data });
+        }
     });
 });
 
@@ -25,7 +36,13 @@ router.post('/pet', upload.array(), function (req, res) {
             age: req.body.age, 
             colour: req.body.colour };
     dal.addNewPet(nu, req, res, function(stat, err, data) {
-        return res.json({ status:stat, data:data, error:err });
+        //return res.json({ status:stat, data:data, error:err });
+        if(!err){
+            return res.json({ success:true });
+        }
+        else{
+            return res.json({ success:false, error:err });
+        }
     });
 });
 

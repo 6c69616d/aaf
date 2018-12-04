@@ -7,17 +7,13 @@ import AnimalsClass from './AnimalsClass.js';
 
 class App extends Component {
   render() {
-    let data = this.state.pets || {};
     return (
-        <div>
-            <p>Here are the pets</p>
-            <ul>
-                {data}
-            </ul>
-        </div>
+      <div className="App">
+        <Animals />
+        <AnimalsClass />
+      </div>
     );
-}
-
+  }
 }
 
 export default App;

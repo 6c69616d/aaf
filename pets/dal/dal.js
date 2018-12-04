@@ -18,7 +18,7 @@ module.exports = {
                     console.log(err);
                     next(false, err, []);
                 }
-                next(true, [], data);
+                next(true, null, data);
             });
         });
     },
@@ -33,7 +33,7 @@ module.exports = {
                     console.log(err);
                     next(false, err, []);
                 }
-                next(true, [], data);
+                next(true, null, data);
             });
         });
     },
@@ -49,7 +49,7 @@ module.exports = {
                     console.log(err);
                     next(false, err, []);
                 }
-                next(true, [], data);
+                next(true, null, data);
             });
         });
     },
@@ -67,7 +67,7 @@ module.exports = {
                         console.log(err);
                         next(false, err, []);
                     }
-                    next(true, [], data);
+                    next(true, null, data);
                 });
         });
     },
@@ -82,7 +82,7 @@ module.exports = {
                     console.log(err);
                     next(false, err, []);
                 }
-                next(true, [], data);
+                next(true, null, data);
             });
         });
     }

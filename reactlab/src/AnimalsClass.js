@@ -12,34 +12,42 @@ class AnimalsClass extends Component {
    } 
 
    render() {
-       return (
-           <div>
-               <ul>
-                   <Animals name="Fido" />
-               </ul>
-           </div>
-       );
-   }
-
-   componentDidMount() {
-    let pets = [
-        { id:"1", name:"Logan", age:"5", breed:"Border Collie", colour:"Black, white, tan" }, 
-        { id:"2", name:"Ralph", age:"2", breed:"Cocker Spaniel", colour:"Ginger" },
-        { id:"3", name:"Gryphon", age:"9", breed:"Staffie X", colour:"grey" }
-    ];
-    let data = [];
-
-    pets.forEach(item => {
-        data.push(<Animals
-            key={item.id}
-            name={item.name}
-            age={item.age}
-            breed={item.breed}
-            colour={item.colour}
-            />);
-    });
-    this.setState( {pets: data} );
+    let data = this.state.pets || {};
+    return (
+        <div>
+            <p>Here are the pets</p>
+            <ul>
+                {data}
+            </ul>
+        </div>
+    );
 }
+
+
+componentDidMount() {
+    fetch('http://localhost:3050/petshop/pet')
+        .then(data => data.json())
+        .then(res => {
+            if (res.error) 
+this.setState({ error: res.error });
+            else {
+                let temp = [];
+                res.data.forEach(item => {
+                    temp.push(
+                        <Animals key={item._id}
+                                name={item.name}
+                                age={item.age}
+                                breed={item.breed}
+                                colour={item.colour}
+                        />
+                    );
+                });
+                this.setState({ pets:temp });
+            }
+        }
+    );
+}
+
 
 }
 
