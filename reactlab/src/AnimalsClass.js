@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import Animals from './Animals';
+import ReactTable from "react-table";
+import "react-table/react-table.css";
 
 class AnimalsClass extends Component {
    constructor(props) {
@@ -13,12 +15,14 @@ class AnimalsClass extends Component {
 
    render() {
     let data = this.state.pets || {};
+    let columns = ['name', 'age', 'species', 'colour'];
     return (
         <div>
-            <p>Here are the pets</p>
-            <ul>
-                {data}
-            </ul>
+ <ReactTable
+    data={data}
+    columns={columns}
+  />
+        <br />
         </div>
     );
 }
