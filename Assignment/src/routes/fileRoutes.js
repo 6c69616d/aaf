@@ -33,5 +33,6 @@ export const fileRoutes = (app) => {
         .delete(deleteFile);
 
     app.route('/files/:fileId/:version_number')
+    .get(getVersionOfFile);
 
 };
