@@ -1,11 +1,25 @@
 import express from 'express';
-import crmRoutes from './src/routes/crmRoutes';
-import routes from './src/routes/crmRoutes';
+import mongoose from 'mongoose';
+import bodyParser from 'body-parser';
+import {userRoutes}  from './src/routes/userRoutes';
 
 const app = express();
 const PORT = 3000;
 
-routes(app);
+//mongoose connection
+mongoose.Promise = global.Promise;
+mongoose.connect('mongodb://localhost/database', {
+    useNewUrlParser: true
+});
+mongoose.connection.on('error', () => {
+    console.log("MongoDB connection error. Make sure the MongoDB is running.")
+});
+
+// bodyparser setup
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.json());
+
+userRoutes(app);
 
 app.get('/', (req, res)=>
     res.send(`Node and express server is running on ${PORT}`)
