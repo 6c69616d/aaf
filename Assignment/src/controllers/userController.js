@@ -10,7 +10,9 @@ export const addNewUser = (req, res) => {
         if (err) {
             res.send(err);
         }
+        else {
         res.json(user);
+        }
     });
 };
 
@@ -18,8 +20,10 @@ export const getUsers = (req, res) => {
     User.find({}, (err, user) => {
         if (err) {
             res.send(err);
-        }
+        } 
+        else {
         res.json(user);
+        }
     });
 };
 
@@ -28,7 +32,9 @@ export const getUserWithId = (req, res) => {
         if (err) {
             res.send(err);
         }
-        res.json(user);
+        else {
+            res.json(user);
+        }
     });
 };
 
@@ -37,15 +43,19 @@ export const updateUser = (req, res) => {
         if (err) {
             res.send(err);
         }
-        res.json(user);
+        else {
+            res.json(user);
+        }
+
     });
 };
 
 export const deleteUser = (req, res) => {
-    User.remove({_id: req.params.userId}, (err, user) => {
+    //changed to deleteOne as remove deprecated
+    User.deleteOne({_id: req.params.userId}, (err, user) => {
         if (err) {
             res.send(err);
         }
         res.json({message: 'Successfully deleted user!'});
-    })
-}
+    });
+};
