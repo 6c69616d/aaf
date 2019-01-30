@@ -5,8 +5,8 @@ const File = mongoose.model('file', FileSchema);
 
 export const addNewFile = (req, res) => {
     let newFile = new File({
-        name: req.body.name,
-        orginial_author: req.body.orginial_author,
+        nameWithFileType: req.body.nameWithFileType,
+        original_author: req.body.original_author,
         creation_date: req.body.creation_date,
         metadata: [{
             title: req.body.title,
@@ -38,7 +38,7 @@ export const getFiles = (req, res) => {
 };
 
 export const getFileWithId = (req, res) => {
-    File.findById(req.params.fileId), ((err, file) => {
+    File.findById(req.params.fileId, (err, file) => {
         if (err) {
             res.send(err);
         }
@@ -107,7 +107,7 @@ export const deleteFile = (req, res) => {
 };
 
 export const deleteAllTheFiles = (req, res) => {
-    File.deleteMany({}, (err,) => {
+    File.deleteMany({}, (err) => {
         if (err) {
             res.status(500).send(err);
         } else {

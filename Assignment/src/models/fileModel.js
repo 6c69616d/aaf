@@ -38,7 +38,7 @@ export const FileSchema = new Schema({
         }
     ],
     locked: {
-        type: boolean,
+        type: Boolean,
         default: false
     }
 });
