@@ -3,23 +3,22 @@ import {
     getUsers,
     getUserWithId,
     updateUser,
-    deleteUser
-} from "../controllers/userController";
+    deleteUser,
+} from '../controllers/userController';
 
 export const userRoutes = (app) => {
     app.route('/users')
         .get((req, res, next) => {
             // middleware
-            console.log(`Request from: ${req.originalUrl}`)
-            console.log(`Request type: ${req.method}`)
+            console.log(`Request from: ${req.originalUrl}`);
+            console.log(`Request type: ${req.method}`);
             next();
         }, getUsers)
 
 
         .post(addNewUser)
 
-        .delete((req, res) =>
-            res.send('DELETE request successful'));
+        .delete((req, res) => res.send('DELETE request successful'));
 
 
     app.route('/users/:userId')
@@ -29,7 +28,6 @@ export const userRoutes = (app) => {
         // put request
         .put(updateUser)
 
-        //delete request
+        // delete request
         .delete(deleteUser);
-
 };
