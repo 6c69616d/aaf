@@ -8,12 +8,14 @@ export const addNewFile = (req, res) => {
         nameWithFileType: req.body.nameWithFileType,
         original_author: req.body.original_author,
         creation_date: req.body.creation_date,
+        mime_type: req.body.mime_type,
         metadata: [{
             title: req.body.title,
             version_number: req.body.version_number,
             version_author: req.body.version_author,
             version_date: req.body.version_date,
             keywords_tags: req.body.keywords_tags,
+            file_size: req.body.file_size,
         }],
         locked: req.body.locked,
     });
@@ -60,6 +62,7 @@ export const getVersionOfFile = (req, res) => {
                 version_author: file.data[versionNumber].author,
                 version_date: file.data[versionNumber].created_date,
                 keywords_tags: file.data[versionNumber].keywords_tags,
+                file_size: req.body.file_size,
             });
         }
     });
@@ -71,12 +74,13 @@ export const updateFile = (req, res) => {
             res.send(err);
         } else {
             const fileToUpdate = file;
-            fileToUpdate.metadata[5] = {
+            fileToUpdate.metadata[6] = {
                 title: req.body.title,
                 version_number: req.body.version_number,
                 version_author: req.body.version_author,
                 version_date: req.body.version_date,
                 keywords_tags: req.body.keywords_tags,
+                file_size: req.body.file_size,
             };
         }
         File.findOneAndUpdate({ _id: req.params.fileId }, file, { new: true },
