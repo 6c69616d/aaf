@@ -1,8 +1,6 @@
 import mongoose from 'mongoose';
 
-const Schema = mongoose.Schema;
-
-export const FileSchema = new Schema({
+export const FileSchema = new mongoose.Schema({
     nameWithFileType: {
         type: String,
         required: 'Enter a file name and extension',
@@ -14,8 +12,14 @@ export const FileSchema = new Schema({
         type: Date,
         required: 'Enter a creation date',
     },
-    metadata: [
+    mime_type: {
+        type: String,
+        required: 'Enter a mime type',
+    },
+    metadata:
         {
+            type: Array,
+            required: 'Enter metadata',
             title: {
                 type: String,
                 required: 'Enter a title',
@@ -35,8 +39,11 @@ export const FileSchema = new Schema({
             keywords_tags: {
                 type: Array,
             },
+            file_size: {
+                type: String,
+            },
+
         },
-    ],
     locked: {
         type: Boolean,
         default: false,

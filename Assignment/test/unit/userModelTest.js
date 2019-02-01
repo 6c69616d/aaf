@@ -1,11 +1,9 @@
 import mongoose from 'mongoose'
-import chai from 'chai';
-import {expect} from 'chai';
+import { expect } from 'chai';
 
 
 const { UserSchema } = require('../../src/models/userModel');
 const User = mongoose.model('user', UserSchema);
-const should = chai.should();
 
 describe('user', ()=> {
     it('should be invalid if firstName is empty', function(done) {
