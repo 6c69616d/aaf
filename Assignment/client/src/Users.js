@@ -7,13 +7,16 @@ const Files = (props) => {
         nameWithFileType: props.nameWithFileType,
         original_author: props.original_author,
     }
-    let editFile = props.ef;
+    let editFile = props.fi;
     let boundEditFile = editFile.bind(this, fi);
 
     return (
         <tr>
-            <td>{props.nameWithFileType}</td>
-            <td>{props.original_author}</td>
+            <td>{props.name}</td>
+            <td>{props.species}</td>
+            <td>{props.breed}</td>
+            <td>{props.age}</td>
+            <td>{props.colour}</td>
             <td>
                 <button 
                     onClick={boundEditFile} 

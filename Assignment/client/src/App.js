@@ -42,17 +42,18 @@ class App extends Component {
         // ];
         const temp = [];
 
-        fetch('/files')
+        fetch('http://localhost:3030/files')
             .then(res => res.json())
             .then(item => {
-                item.data.forEach(it => {
+                item.forEach(it => {
                     temp.push(<Files
                         key={it._id}
                         id={it._id}
                         nameWithFileType={it.nameWithFileType}
                         original_author={it.original_author}
+                        ef={this.editAnimal}
+                        />);
                         
-                    />);
                 })
                 this.setState({ data: temp });
             })
