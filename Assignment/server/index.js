@@ -1,9 +1,10 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
+import cors from 'cors';
 import { userRoutes } from './src/routes/userRoutes';
 import { fileRoutes } from './src/routes/fileRoutes';
-import cors from 'cors';
+
 
 const app = express();
 const PORT = 3030;

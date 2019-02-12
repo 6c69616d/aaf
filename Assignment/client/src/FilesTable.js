@@ -11,6 +11,8 @@ const FilesTable = (props) => {
                     <tr>
                         <th>Name With File Type</th>
                         <th>Original Author</th>
+                        <th>Creation Date</th>
+                        <th>Version Number</th>
                         <th></th>
                     </tr>
                 </thead>

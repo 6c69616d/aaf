@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import './App.css';
 import FilesTable from './FilesTable';
-// import NewAnimalForm from './NewAnimalForm';
-// import EditAnimalForm from './EditAnimalForm';
+// import NewFileForm from './NewFileForm';
+// import EditFileForm from './EditFileForm';
 import Files from './Files';
 import ReactModal from 'react-modal';
 
@@ -14,22 +14,22 @@ class App extends Component {
         this.state = { 
             data:[], 
             formIsValid:false, 
-            animalToEdit:[], 
-            showNewAnimalModal:false, showEditAnimalModal:false, 
+            FileToEdit:[], 
+            showNewFileModal:false, showEditFileModal:false, 
             nom:'', species:'', breed:'', age:'', colour:'' 
         };
 
-        this.handleSubmitNewAnimal = this.handleSubmitNewAnimal.bind(this);
+        this.handleSubmitNewFile = this.handleSubmitNewFile.bind(this);
         this.handleSubmitUpdate = this.handleSubmitUpdate.bind(this);
 
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleUpdateChange = this.handleUpdateChange.bind(this);
 
-        this.handleOpenNewAnimalModal = this.handleOpenNewAnimalModal.bind(this);
-        this.handleCloseNewAnimalModal = this.handleCloseNewAnimalModal.bind(this);
-        this.handleOpenEditAnimalModal = this.handleOpenEditAnimalModal.bind(this);
-        this.handleCloseEditAnimalModal = this.handleCloseEditAnimalModal.bind(this);
-        this.editAnimal = this.editAnimal.bind(this);
+        this.handleOpenNewFileModal = this.handleOpenNewFileModal.bind(this);
+        this.handleCloseNewFileModal = this.handleCloseNewFileModal.bind(this);
+        this.handleOpenEditFileModal = this.handleOpenEditFileModal.bind(this);
+        this.handleCloseEditFileModal = this.handleCloseEditFileModal.bind(this);
+        this.editFile = this.editFile.bind(this);
 
     }
 
@@ -54,7 +54,7 @@ class App extends Component {
                         breed={it.breed}
                         colour={it.colour}
                         species={it.species}
-                        ea={this.editAnimal}
+                        ea={this.editFile}
                     />);
                 })
                 this.setState({ data: temp });
@@ -64,7 +64,7 @@ class App extends Component {
             });
     }
 
-    handleSubmitNewAnimal(event) {
+    handleSubmitNewFile(event) {
         event.preventDefault();
 
         if (!event.target.checkValidity()) {
@@ -92,11 +92,11 @@ class App extends Component {
                 console.log("Successful "+ status);
             })
         })
-        .then(this.handleCloseEditAnimalModal());
+        .then(this.handleCloseEditFileModal());
     }
 
     handleSubmitUpdate(event) {
-        // console.log(this.state.animalToEdit);
+        // console.log(this.state.FileToEdit);
 
         event.preventDefault();
         if (!event.target.checkValidity()) {
@@ -106,12 +106,12 @@ class App extends Component {
         }
         this.setState({ formIsValid: true });
 
-        let url = '/petshop/api/pet/'+ this.state.animalToEdit.id +'/edit';
+        let url = '/petshop/api/pet/'+ this.state.FileToEdit.id +'/edit';
         // console.log(url);
 
         fetch(url, {
             method: "POST",
-            body:JSON.stringify(this.state.animalToEdit),
+            body:JSON.stringify(this.state.FileToEdit),
             headers: { "Content-Type": "application/json; charset=utf-8" }
         })
         .then(response => {
@@ -120,7 +120,7 @@ class App extends Component {
                 console.log("Successful "+ status);
             })
         })
-        .then(this.handleCloseEditAnimalModal());
+        .then(this.handleCloseEditFileModal());
     }
 
 
@@ -134,45 +134,45 @@ class App extends Component {
     handleUpdateChange(event) {
         const target = event.target;
         const name = target.name;
-        let temp = this.state.animalToEdit;
+        let temp = this.state.FileToEdit;
         temp[name] = target.value;
         console.log(temp);
-        this.setState({ animalToEdit:temp });
+        this.setState({ FileToEdit:temp });
         // this.setState({ [name]: target.value});
     }
 
-    handleOpenNewAnimalModal () { this.setState({ showNewAnimalModal: true }); }  
-    handleCloseNewAnimalModal () { this.setState({ showNewAnimalModal: false }); }
-    handleCloseEditAnimalModal () { this.setState({ showEditAnimalModal: false }); }
-    handleOpenEditAnimalModal () { this.setState({ showEditAnimalModal: true }); }  
+    handleOpenNewFileModal () { this.setState({ showNewFileModal: true }); }  
+    handleCloseNewFileModal () { this.setState({ showNewFileModal: false }); }
+    handleCloseEditFileModal () { this.setState({ showEditFileModal: false }); }
+    handleOpenEditFileModal () { this.setState({ showEditFileModal: true }); }  
 
 
-    editAnimal(orig, evt) {
-        this.setState({ showEditAnimalModal:true, animalToEdit:orig }); 
+    editFile(orig, evt) {
+        this.setState({ showEditFileModal:true, FileToEdit:orig }); 
     }
 
     render() {
         return (
             <div>
                 <p>
-                    <button onClick={this.handleOpenNewAnimalModal}>Add a new pet</button>
+                    <button onClick={this.handleOpenNewFileModal}>Add a new pet</button>
                 </p>
 
-                {/* <̣NewAnimalForm hs={this.handleSubmit} hic={this.handleInputChange} ea={this.editAnimal} /> */}
+                {/* <̣NewFileForm hs={this.handleSubmit} hic={this.handleInputChange} ea={this.editFile} /> */}
                 <FilesTable files={this.state.data} />
 
                 <ReactModal
-                    isOpen={this.state.showNewAnimalModal}
+                    isOpen={this.state.showNewFileModal}
                     contentLabel="Minimal Modal Example" >
-                    <button onClick={this.handleCloseNewAnimalModal}>Close</button>
-                    {/* <NewAnimalForm hs={this.handleSubmitNewAnimal} hic={this.handleInputChange} ea={this.editAnimal} /> */}
+                    <button onClick={this.handleCloseNewFileModal}>Close</button>
+                    {/* <NewFileForm hs={this.handleSubmitNewFile} hic={this.handleInputChange} ea={this.editFile} /> */}
                 </ReactModal>
 
                 <ReactModal
-                    isOpen={this.state.showEditAnimalModal}
+                    isOpen={this.state.showEditFileModal}
                     contentLabel="Minimal Modal Example" >
-                    <button onClick={this.handleCloseEditAnimalModal}>Close</button>
-                    {/* <EditAnimalForm hs={this.handleSubmitUpdate} hic={this.handleUpdateChange} ate={this.state.animalToEdit} /> */}
+                    <button onClick={this.handleCloseEditFileModal}>Close</button>
+                    {/* <EditFileForm hs={this.handleSubmitUpdate} hic={this.handleUpdateChange} ate={this.state.FileToEdit} /> */}
                 </ReactModal>
             </div>
         );
