@@ -52,8 +52,8 @@ export default {
 
 </script>
 
-<style scoped>
-.AllFiles {
-  margin: 0 100px;
-}
+<style lang="scss" scoped>
+  .md-table + .md-table {
+    margin-top: 16px
+  }
 </style>
