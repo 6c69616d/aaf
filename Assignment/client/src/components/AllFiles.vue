@@ -45,6 +45,7 @@ export default {
     onSelect(file) {
       console.log('onSelect called');
       this.selected = file;
+      window.location.href = '/specificFile';
     },
   },
 };
@@ -56,6 +57,6 @@ export default {
     margin-top: 16px
   }
   .AllFiles {
-    padding: 0 100px;
+    padding: 50px 100px;
   }
 </style>
