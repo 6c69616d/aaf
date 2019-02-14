@@ -1,26 +1,24 @@
 <template>
 <div class="AllFiles">
-    <md-table md-card @md-selected="onSelect">
+    <md-table md-card>
       <md-table-toolbar>
         <h1 class="md-title">All Files</h1>
       </md-table-toolbar>
       <md-table-row>
-        <md-table-head md-numeric>ID</md-table-head>
+        <md-table-head>ID</md-table-head>
         <md-table-head>Name With File Type</md-table-head>
         <md-table-head>Title</md-table-head>
         <md-table-head>Version Number</md-table-head>
         <md-table-head>Version Author</md-table-head>
       </md-table-row>
 
-  <div class="file" v-for="file in AllFiles" :key="file._id">
-      <md-table-row md-selectable="single">
-        <md-table-cell md-numeric>{{ file._id }}</md-table-cell>
+      <md-table-row md-selectable="single" class="file" v-for="file in AllFiles" :key="file._id" @click="onSelect(file._id)">
+        <md-table-cell>{{ file._id }}</md-table-cell>
         <md-table-cell>{{ file.nameWithFileType }}</md-table-cell>
         <md-table-cell> {{ file.metadata[file.metadata.length - 1].title }}</md-table-cell>
         <md-table-cell>{{ file.metadata[file.metadata.length - 1].version_number }}</md-table-cell>
-         <md-table-cell>{{ file.metadata[file.metadata.length - 1].version_author }}</md-table-cell>
+        <md-table-cell>{{ file.metadata[file.metadata.length - 1].version_author }}</md-table-cell>
       </md-table-row>
-  </div>
     </md-table>
     <p>Selected:</p>
     {{ selected }}
@@ -32,7 +30,7 @@ export default {
   name: 'AllFiles',
   data() {
     return {
-      AllFiles: null,
+      AllFiles: [],
       selected: {},
     };
   },
@@ -45,6 +43,7 @@ export default {
   },
   methods: {
     onSelect(file) {
+      console.log('onSelect called');
       this.selected = file;
     },
   },
@@ -55,5 +54,8 @@ export default {
 <style lang="scss" scoped>
   .md-table + .md-table {
     margin-top: 16px
+  }
+  .AllFiles {
+    padding: 0 100px;
   }
 </style>

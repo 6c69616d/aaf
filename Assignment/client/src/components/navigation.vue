@@ -15,7 +15,7 @@
 export default {
   name: 'LastRowFixed',
   data: () => ({
-    menuVisible: false
+    menuVisible: true
   })
 }
 </script>
