@@ -1,10 +1,10 @@
 <template>
-  <div class="Specific File">
+  <div class="SpecificFile">
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
     >
-    <div class="SpecificFile">
+    <div class="SpecificFile1">
       <md-table md-card>
         <md-table-toolbar>
           <h1 class="md-title">Original File</h1>
@@ -14,6 +14,7 @@
           <md-table-head>Author</md-table-head>
           <md-table-head>Creation Date</md-table-head>
           <md-table-head>Mime Type</md-table-head>
+          <md-table-head>Checked Out</md-table-head>
           <md-table-head></md-table-head>
         </md-table-row>
         <md-table-row>
@@ -21,6 +22,7 @@
           <md-table-cell>{{ file.original_author }}</md-table-cell>
           <md-table-cell>{{ file.creation_date }}</md-table-cell>
           <md-table-cell>{{ file.mime_type }}</md-table-cell>
+                    <md-table-cell>{{ file.locked }}</md-table-cell>
           <md-table-cell>
             <md-button class="md-icon-button md-raised"  @click="editSpecificFile(file._id)">
               <md-icon>edit</md-icon>
@@ -93,7 +95,7 @@ export default {
         });
     },
     editSpecificFile(fileId) {
-      window.location.href = `editSpecificFile/${fileId}`
+      window.location.href = `/editSpecificFile/${fileId}`
     }
   }
 };
@@ -103,7 +105,7 @@ export default {
 .md-table + .md-table {
   margin-top: 16px;
 }
-.AllFiles {
+.SpecificFile {
   padding: 50px 100px;
 }
 
