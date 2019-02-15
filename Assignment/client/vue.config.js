@@ -15,12 +15,12 @@ module.exports = {
       title: 'Index',
     },
     files: {
-      entry: './src/views/AllFiles/main.js',
+      entry: './src/views/allFiles/main.js',
       template: 'public/index.html',
       title: 'Files',
     },
     specificFile: {
-      entry: './src/views/SpecificFile/main.js',
+      entry: './src/views/specificFile/main.js',
       template: 'public/index.html',
       title: 'File',
     },

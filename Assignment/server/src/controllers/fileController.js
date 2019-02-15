@@ -75,7 +75,7 @@ export const updateFile = (req, res) => {
             res.send(err);
         } else {
             const fileToUpdate = file;
-            fileToUpdate.metadata[6] = {
+            fileToUpdate.metadata[file.metadata.length] = {
                 title: req.body.title,
                 version_number: req.body.version_number,
                 version_author: req.body.version_author,

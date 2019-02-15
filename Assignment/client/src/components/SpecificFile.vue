@@ -1,84 +1,110 @@
 <template>
-<div class="Specific File">
+  <div class="Specific File">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    >
     <div class="SpecificFile">
-    <md-table md-card>
-      <md-table-toolbar>
-        <h1 class="md-title">Original File</h1>
-      </md-table-toolbar>
-      <md-table-row>
-        <md-table-head>Name With File Type</md-table-head>
-        <md-table-head>Author</md-table-head>
-        <md-table-head>Creation Date</md-table-head>
-        <md-table-head>Mime Type</md-table-head>
-      </md-table-row>
+      <md-table md-card>
+        <md-table-toolbar>
+          <h1 class="md-title">Original File</h1>
+        </md-table-toolbar>
         <md-table-row>
-        <md-table-cell>{{ file.nameWithFileType }}</md-table-cell>
-        <md-table-cell>{{ file.original_author }}</md-table-cell>
-        <md-table-cell>{{ file.creation_date }}</md-table-cell>
-        <md-table-cell>{{ file.mime_type }}</md-table-cell>
-      </md-table-row>
-    </md-table>
+          <md-table-head>Name With File Type</md-table-head>
+          <md-table-head>Author</md-table-head>
+          <md-table-head>Creation Date</md-table-head>
+          <md-table-head>Mime Type</md-table-head>
+          <md-table-head></md-table-head>
+        </md-table-row>
+        <md-table-row>
+          <md-table-cell>{{ file.nameWithFileType }}</md-table-cell>
+          <md-table-cell>{{ file.original_author }}</md-table-cell>
+          <md-table-cell>{{ file.creation_date }}</md-table-cell>
+          <md-table-cell>{{ file.mime_type }}</md-table-cell>
+          <md-table-cell>
+            <md-button class="md-icon-button md-raised"  @click="editSpecificFile(file._id)">
+              <md-icon>edit</md-icon>
+            </md-button>
+            <md-button class="md-icon-button md-raised md-accent" @click="deleteSpecificFile(file._id)">
+              <md-icon class="fa fa-trash"></md-icon>
+            </md-button>
+          </md-table-cell>
+        </md-table-row>
+      </md-table>
     </div>
-    <!-- <div class="versions">
-    <md-table>
-      <md-table-row md-selectable="single" class="file" v-for="file in AllFiles" :key="file._id" @click="onSelect(file._id)">
-        <md-table-cell>{{ file.nameWithFileType }}</md-table-cell>
-        <md-table-cell> {{ file.metadata[file.metadata.length - 1].title }}</md-table-cell>
-        <md-table-cell>{{ file.metadata[file.metadata.length - 1].version_number }}</md-table-cell>
-        <md-table-cell>{{ file.metadata[file.metadata.length - 1].version_author }}</md-table-cell>
-      </md-table-row>
-    </md-table>
-    <p>Selected:</p>
-    {{ selected }}
-    </div> -->
-</div>
+    <div class="versions">
+      <md-table>
+        <md-table-toolbar>
+          <h1 class="md-title">Versions</h1>
+        </md-table-toolbar>
+        <md-table-row>
+          <md-table-head>Title</md-table-head>
+          <md-table-head>Version Number</md-table-head>
+          <md-table-head>Version Author</md-table-head>
+          <md-table-head>Version Date</md-table-head>
+          <md-table-head>File Size</md-table-head>
+          <md-table-head>Keywords/Tags</md-table-head>
+        </md-table-row>
+        <md-table-row v-for="v in file.metadata" :key="v._id">
+          <md-table-cell>{{ v.title }}</md-table-cell>
+          <md-table-cell>{{ v.version_number }}</md-table-cell>
+          <md-table-cell>{{ v.version_author }}</md-table-cell>
+          <md-table-cell>{{ v.version_date }}</md-table-cell>
+          <md-table-cell>{{ v.file_size }}</md-table-cell>
+          <md-table-cell>{{ v.keywords_tags }}</md-table-cell>
+        </md-table-row>
+      </md-table>
+    </div>
+  </div>
 </template>
-
 <script>
+
 export default {
-  name: 'SpecificFile',
+  name: "SpecificFile",
   data() {
     return {
-      SpecificFile: [],
+      file: {},
       selected: {},
+      first: false,
     };
   },
   mounted() {
-    const currentUrl = window.location.pathname.split('/');
+    const currentUrl = window.location.pathname.split("/");
     const fileId = currentUrl[2];
     this.$axios
       .get(`http://localhost:3030/files/${fileId}`) // Pass in ID as param
-      .then((response) => {
-        this.SpecificFile = response.data;
+      .then(response => {
+        this.file = response.data;
       })
-      .catch((error) => {
-        if (error.response) {
-          // The request was made and the server responded with a status code
-          // that falls out of the range of 2xx
-          console.log(error.response.data);
-          console.log(error.response.status);
-          console.log(error.response.headers);
-        } else if (error.request) {
-          // The request was made but no response was received
-          // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
-          // http.ClientRequest in node.js
-          console.log(error.request);
-        } else {
-          // Something happened in setting up the request that triggered an Error
-          console.log('Error', error.message);
-        }
-        console.log(error.config);
+      .catch(error => {
+        console.log("Data Reterival Failed");
       });
   },
+  methods: {
+    deleteSpecificFile(fileId) {
+      this.$axios
+        .delete(`http://localhost:3030/files/${fileId}`)
+        .then(() => {
+          this.file = [];
+          window.location.href = "/files";
+        })
+        .catch(error => {
+          console.log("Delete Failed");
+        });
+    },
+    editSpecificFile(fileId) {
+      window.location.href = `editSpecificFile/${fileId}`
+    }
+  }
 };
-
 </script>
 
 <style lang="scss" scoped>
-  .md-table + .md-table {
-    margin-top: 16px
-  }
-  .AllFiles {
-    padding: 50px 100px;
-  }
+.md-table + .md-table {
+  margin-top: 16px;
+}
+.AllFiles {
+  padding: 50px 100px;
+}
+
 </style>

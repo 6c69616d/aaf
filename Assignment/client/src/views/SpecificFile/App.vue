@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import AllFiles from '../../components/SpecificFile.vue';
+import SpecificFile from '../../components/SpecificFile.vue';
 import Navigation from '../../components/navigation.vue';
 
 export default {

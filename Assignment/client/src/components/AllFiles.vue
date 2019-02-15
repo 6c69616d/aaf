@@ -45,7 +45,7 @@ export default {
     onSelect(file) {
       console.log('onSelect called');
       this.selected = file;
-      window.location.href = '/specificFile';
+      window.location.href = `specificFile/${file}`;
     },
   },
 };
