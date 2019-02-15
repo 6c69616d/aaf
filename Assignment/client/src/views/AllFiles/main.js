@@ -12,5 +12,5 @@ Vue.prototype.$axios = Axios;
 Vue.use(VueMaterial);
 
 new Vue({
-  render: h => h(App),
+    render: h => h(App),
 }).$mount('#app');
