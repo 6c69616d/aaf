@@ -37,5 +37,10 @@ module.exports = {
             template: 'public/index.html',
             title: 'Add File',
         },
+        login: {
+            entry: './src/views/login/main.js',
+            template: 'public/index.html',
+            title: 'Login',
+        },
     },
 };
