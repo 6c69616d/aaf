@@ -75,6 +75,7 @@ export const updateFile = (req, res) => {
             res.send(err);
         } else {
             const fileToUpdate = file;
+            fileToUpdate.locked = req.body.locked;
             fileToUpdate.metadata[file.metadata.length] = {
                 title: req.body.title,
                 version_number: req.body.version_number,
@@ -83,8 +84,7 @@ export const updateFile = (req, res) => {
                 keywords_tags: req.body.keywords_tags,
                 file_size: req.body.file_size,
             };
-        }
-        File.findOneAndUpdate({ _id: req.params.fileId }, file, { new: true },
+        File.findOneAndUpdate({ _id: req.params.fileId }, new File(fileToUpdate), { new: true },
             (err2, updatedFile) => {
                 if (err2) {
                     res.send(err2);
@@ -92,6 +92,7 @@ export const updateFile = (req, res) => {
                     res.json(updatedFile);
                 }
             });
+        }
     });
 };
 

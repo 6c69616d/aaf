@@ -17,33 +17,33 @@ export const FileSchema = new mongoose.Schema({
         required: 'Enter a mime type',
     },
     metadata:
-        {
-            type: Array,
-            required: 'Enter metadata',
-            title: {
-                type: String,
-                required: 'Enter a title',
-            },
-            version_number: {
-                type: Number,
-                default: 1,
-            },
-            version_author: { // could change to logged in user some how
-                type: String,
-                required: 'Enter an author',
-            },
-            version_date: {
-                type: Date,
-                default: Date.now,
-            },
-            keywords_tags: {
-                type: Array,
-            },
-            file_size: {
-                type: String,
-            },
+        [
+            {
+                title: {
+                    type: String,
+                    required: 'Enter a title',
+                },
+                version_number: {
+                    type: Number,
+                    default: 1,
+                },
+                version_author: { // could change to logged in user some how
+                    type: String,
+                    required: 'Enter an author',
+                },
+                version_date: {
+                    type: Date,
+                    default: Date.now,
+                },
+                keywords_tags: {
+                    type: Array,
+                },
+                file_size: {
+                    type: String,
+                },
+            }
 
-        },
+        ],
     locked: {
         type: Boolean,
         default: false,

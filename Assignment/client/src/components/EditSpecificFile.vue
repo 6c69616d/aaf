@@ -1,49 +1,56 @@
 <template>
   <div class="EditSpecificFile">
     <md-card>
-      <div id="form">
+      <form id="form" novalidate @submit.prevent>
         <md-field>
           <label>Name With File Type</label>
-          <md-input disabled v-model="file.nameWithFileType"></md-input>
+          <md-input type="text" disabled v-model="file.nameWithFileType"></md-input>
         </md-field>
         <md-field>
           <label>Original Author</label>
-          <md-input disabled v-model="file.original_author"></md-input>
+          <md-input type="text" disabled v-model="file.original_author"></md-input>
         </md-field>
         <md-field>
           <label>Creation Date</label>
-          <md-input disabled v-model="file.creation_date"></md-input>
+          <md-input input="text" disabled v-model="file.creation_date"></md-input>
         </md-field>
         <md-field>
           <label>Mime Type</label>
-          <md-input disabled v-model="file.mime_type"></md-input>
+          <md-input type="text" disabled v-model="file.mime_type"></md-input>
         </md-field>
         <md-field>
           <label>Title</label>
-          <md-input v-model="file.metadata[file.metadata.length - 1].title"></md-input>
+          <md-input type="text" v-model="file.metadata[file.metadata.length - 1].title"></md-input>
         </md-field>
         <md-field>
           <label>Version Number</label>
-          <md-input v-model="file.metadata[file.metadata.length - 1].version_number"></md-input>
+          <md-input type="number" v-model="file.metadata[file.metadata.length - 1].version_number"></md-input>
         </md-field>
         <md-field>
           <label>Version Author</label>
-          <md-input v-model="file.metadata[file.metadata.length - 1].version_author"></md-input>
+          <md-input type="text" v-model="file.metadata[file.metadata.length - 1].version_author"></md-input>
         </md-field>
-        <md-field>
-          <label>Version Date</label>
-          <md-input v-model="Date.now"></md-input>
-        </md-field>
+
+        <label>Version Date</label>
+        <md-datepicker
+          v-model="file.metadata[file.metadata.length - 1].version_date"
+          md-immediately
+        />
+
         <md-field>
           <label>Keywords/Tags</label>
-          <md-input v-model="file.metadata[file.metadata.length - 1].keywords_tags"></md-input>
+          <md-input tpye="text" v-model="file.metadata[file.metadata.length - 1].keywords_tags"></md-input>
         </md-field>
         <md-field>
           <label>File Size (MB)</label>
-          <md-input v-model="file.metadata[file.metadata.length - 1].file_size"></md-input>
+          <md-input type="number" v-model="file.metadata[file.metadata.length - 1].file_size"></md-input>
         </md-field>
-        <md-button class="md-raised md-primary" @click>Edit</md-button>
-      </div>
+        <md-button
+          type="submit"
+          class="md-raised md-primary"
+          @click="submitEditSpecificFile(file._id, file.metadata[file.metadata.length - 1])"
+        >Edit</md-button>
+      </form>
     </md-card>
   </div>
 </template>
@@ -52,8 +59,7 @@ export default {
   name: "EditSpecificFile",
   data() {
     return {
-      file: {},
-      selected: {}
+      file: {}
     };
   },
   mounted() {
@@ -68,7 +74,25 @@ export default {
         console.log("Data Reterival Failed");
       });
   },
-  methods: {}
+  methods: {
+    submitEditSpecificFile(fileId, newVersion) {
+      this.$axios
+        .put(`http://localhost:3030/files/${fileId}`, {
+          title: newVersion.title,
+          version_number: newVersion.version_number,
+          version_author: newVersion.version_author,
+          version_date: newVersion.version_date,
+          keywords_tags: newVersion.keywords_tags,
+          file_size: newVersion.file_size
+        })
+        .then(response => {
+          window.location.href = `/files/${fileId}`;
+        })
+        .catch(error => {
+          console.log("Unable to process new version");
+        });
+    }
+  }
 };
 </script>
 
