@@ -6,6 +6,7 @@ module.exports = {
                 { from: /\/files/, to: '/files.html' },
                 { from: /\/specificFile/, to: '/specificFile.html' },
                 { from: /\/editSpecificFile/, to: '/editSpecificFile.html' },
+                { from: /\/addFile/, to: '/addFile.html' },
                 { from: /\/login/, to: '/login.html' },
 
             ],
@@ -25,7 +26,7 @@ module.exports = {
         specificFile: {
             entry: './src/views/specificFile/main.js',
             template: 'public/index.html',
-            title: 'File',
+            title: ' Specific File',
         },
         editSpecificFile: {
             entry: './src/views/editSpecificFile/main.js',

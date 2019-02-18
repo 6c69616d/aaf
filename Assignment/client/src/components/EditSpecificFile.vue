@@ -41,7 +41,7 @@
         />
         <md-field>
           <label>Keywords/Tags</label>
-          <md-input tpye="text" v-model="file.metadata[file.metadata.length - 1].keywords_tags"></md-input>
+          <md-input type="text" v-model="file.metadata[file.metadata.length - 1].keywords_tags"></md-input>
         </md-field>
         <md-field>
           <label>File Size (MB)</label>
