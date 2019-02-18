@@ -10,11 +10,11 @@ import AllFiles from '../../components/AllFiles.vue';
 import Navigation from '../../components/navigation.vue';
 
 export default {
-  name: 'app',
-  components: {
-    AllFiles,
-    Navigation,
-  },
+    name: 'app',
+    components: {
+        AllFiles,
+        Navigation,
+    },
 };
 </script>
 

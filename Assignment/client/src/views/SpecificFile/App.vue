@@ -10,11 +10,11 @@ import SpecificFile from '../../components/SpecificFile.vue';
 import Navigation from '../../components/navigation.vue';
 
 export default {
-  name: 'app',
-  components: {
-    SpecificFile,
-    Navigation,
-  },
+    name: 'app',
+    components: {
+        SpecificFile,
+        Navigation,
+    },
 };
 </script>
 

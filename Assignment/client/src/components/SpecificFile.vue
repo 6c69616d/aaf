@@ -22,12 +22,20 @@
           <md-table-cell>{{ file.original_author }}</md-table-cell>
           <md-table-cell>{{ file.creation_date }}</md-table-cell>
           <md-table-cell>{{ file.mime_type }}</md-table-cell>
-                    <md-table-cell>{{ file.locked }}</md-table-cell>
+          <md-table-cell>{{ file.locked }}</md-table-cell>
           <md-table-cell>
-            <md-button class="md-icon-button md-raised"  @click="editSpecificFile(file._id)">
+            <md-button
+              id="editBtn"
+              class="md-icon-button md-raised"
+              @click="editSpecificFile(file._id)"
+            >
               <md-icon>edit</md-icon>
             </md-button>
-            <md-button class="md-icon-button md-raised md-accent" @click="deleteSpecificFile(file._id)">
+            <md-button
+              id="deleteBtn"
+              class="md-icon-button md-raised md-accent"
+              @click="deleteSpecificFile(file._id)"
+            >
               <md-icon class="fa fa-trash"></md-icon>
             </md-button>
           </md-table-cell>
@@ -60,44 +68,47 @@
   </div>
 </template>
 <script>
-
 export default {
-  name: "SpecificFile",
-  data() {
-    return {
-      file: {},
-      selected: {},
-      first: false,
-    };
-  },
-  mounted() {
-    const currentUrl = window.location.pathname.split("/");
-    const fileId = currentUrl[2];
-    this.$axios
-      .get(`http://localhost:3030/files/${fileId}`) // Pass in ID as param
-      .then(response => {
-        this.file = response.data;
-      })
-      .catch(error => {
-        console.log("Data Reterival Failed");
-      });
-  },
-  methods: {
-    deleteSpecificFile(fileId) {
-      this.$axios
-        .delete(`http://localhost:3030/files/${fileId}`)
-        .then(() => {
-          this.file = [];
-          window.location.href = "/files";
-        })
-        .catch(error => {
-          console.log("Delete Failed");
-        });
+    name: 'SpecificFile',
+    data() {
+        return {
+            file: {},
+            selected: {},
+            first: false,
+        };
     },
-    editSpecificFile(fileId) {
-      window.location.href = `/editSpecificFile/${fileId}`
-    }
-  }
+    mounted() {
+        const currentUrl = window.location.pathname.split('/');
+        const fileId = currentUrl[2];
+        this.$axios
+            .get(`http://localhost:3030/files/${fileId}`) // Pass in ID as param
+            .then((response) => {
+                this.file = response.data;
+                document.getElementById('editBtn').disabled = this.file.locked;
+                document.getElementById('deleteBtn').disabled = this.file.locked;
+            })
+            .catch((error) => {
+                console.log('Data Reterival Failed');
+            });
+    },
+    methods: {
+        deleteSpecificFile(fileId) {
+            this.$axios
+                .delete(`http://localhost:3030/files/${fileId}`)
+                .then(() => {
+                    this.file = [];
+                    window.location.href = '/files';
+                })
+                .catch((error) => {
+                    console.log('Delete Failed');
+                });
+        },
+        editSpecificFile(fileId) {
+            this.$axios
+                .put(`http://localhost:3030/files/${fileId}`, { locked: true });
+            window.location.href = `/editSpecificFile/${fileId}`;
+        },
+    },
 };
 </script>
 
@@ -108,5 +119,4 @@ export default {
 .SpecificFile {
   padding: 50px 100px;
 }
-
 </style>

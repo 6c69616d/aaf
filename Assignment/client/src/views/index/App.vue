@@ -10,10 +10,10 @@
 import Navigation from '../../components/navigation.vue';
 
 export default {
-  name: 'app',
-  components: {
-    Navigation,
-  },
+    name: 'app',
+    components: {
+        Navigation,
+    },
 };
 </script>
 

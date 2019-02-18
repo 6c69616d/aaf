@@ -1,6 +1,9 @@
 <template>
   <div class="EditSpecificFile">
     <md-card>
+      <md-toolbar>
+          <h1 class="md-title">Edit File</h1>
+        </md-toolbar>
       <form id="form" novalidate @submit.prevent>
         <md-field>
           <label>Name With File Type</label>
@@ -36,7 +39,6 @@
           v-model="file.metadata[file.metadata.length - 1].version_date"
           md-immediately
         />
-
         <md-field>
           <label>Keywords/Tags</label>
           <md-input tpye="text" v-model="file.metadata[file.metadata.length - 1].keywords_tags"></md-input>
@@ -56,51 +58,49 @@
 </template>
 <script>
 export default {
-  name: "EditSpecificFile",
-  data() {
-    return {
-      file: {}
-    };
-  },
-  mounted() {
-    const currentUrl = window.location.pathname.split("/");
-    const fileId = currentUrl[2];
-    this.$axios
-      .get(`http://localhost:3030/files/${fileId}`) // Pass in ID as param
-      .then(response => {
-        this.file = response.data;
-      })
-      .catch(error => {
-        console.log("Data Reterival Failed");
-      });
-  },
-  methods: {
-    submitEditSpecificFile(fileId, newVersion) {
-      this.$axios
-        .put(`http://localhost:3030/files/${fileId}`, {
-          title: newVersion.title,
-          version_number: newVersion.version_number,
-          version_author: newVersion.version_author,
-          version_date: newVersion.version_date,
-          keywords_tags: newVersion.keywords_tags,
-          file_size: newVersion.file_size
-        })
-        .then(response => {
-          window.location.href = `/files/${fileId}`;
-        })
-        .catch(error => {
-          console.log("Unable to process new version");
-        });
-    }
-  }
+    name: 'EditSpecificFile',
+    data() {
+        return {
+            file: {},
+        };
+    },
+    mounted() {
+        const currentUrl = window.location.pathname.split('/');
+        const fileId = currentUrl[2];
+        this.$axios
+            .get(`http://localhost:3030/files/${fileId}`) // Pass in ID as param
+            .then((response) => {
+                this.file = response.data;
+            })
+            .catch((error) => {
+                console.log('Data Reterival Failed');
+            });
+    },
+    methods: {
+        submitEditSpecificFile(fileId, newVersion) {
+            this.$axios
+                .put(`http://localhost:3030/files/${fileId}`, {
+                    locked: false,
+                    title: newVersion.title,
+                    version_number: newVersion.version_number,
+                    version_author: newVersion.version_author,
+                    version_date: newVersion.version_date,
+                    keywords_tags: newVersion.keywords_tags,
+                    file_size: newVersion.file_size,
+                })
+                .then((response) => {
+                    window.location.href = `/specificFile/${fileId}`;
+                })
+                .catch((error) => {
+                    console.log('Unable to process new version');
+                });
+        },
+    },
 };
 </script>
 
 <style lang="scss" scoped>
-.md-table + .md-table {
-  margin-top: 16px;
-}
-#form {
+#form  {
   padding: 10px 200px;
 }
 .EditSpecificFile {
