@@ -27,7 +27,7 @@ export const FileSchema = new mongoose.Schema({
                     type: Number,
                     default: 1,
                 },
-                version_author: { // could change to logged in user some how
+                version_author: {
                     type: String,
                     required: 'Enter an author',
                 },
