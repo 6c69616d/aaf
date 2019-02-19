@@ -1,26 +1,36 @@
 <template>
   <div id="app">
     <Navigation/>
-    <EditSpecificFile/>
+    <div v-if="authenticated()">
+      <EditSpecificFile/>
+    </div>
+    <div v-else>
+      <h1>Please login to view this page</h1>
+    </div>
   </div>
 </template>
 
 <script>
-import EditSpecificFile from '../../components/EditSpecificFile.vue';
-import Navigation from '../../components/navigation.vue';
+import EditSpecificFile from "../../components/EditSpecificFile.vue";
+import Navigation from "../../components/navigation.vue";
 
 export default {
-    name: 'app',
-    components: {
-        EditSpecificFile,
-        Navigation,
-    },
+  name: "app",
+  components: {
+    EditSpecificFile,
+    Navigation
+  },
+  methods: {
+    authenticated() {
+      return localStorage.token;
+    }
+  }
 };
 </script>
 
 <style>
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   /* text-align: center; */

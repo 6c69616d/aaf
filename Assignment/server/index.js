@@ -4,6 +4,7 @@ import bodyParser from 'body-parser';
 import cors from 'cors';
 import { userRoutes } from './src/routes/userRoutes';
 import { fileRoutes } from './src/routes/fileRoutes';
+import authRoutes from './src/routes/authRoutes';
 
 
 const app = express();
@@ -24,8 +25,10 @@ app.use(bodyParser.json());
 
 app.use(cors());
 
+authRoutes(app);
 userRoutes(app);
 fileRoutes(app);
+
 
 app.get('/', (req, res) => res.send(`Node and express server is running on ${PORT}`));
 

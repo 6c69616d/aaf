@@ -7,8 +7,12 @@ import {
     deleteFile,
     deleteAllTheFiles,
 } from '../controllers/fileController';
+import {
+    isUserAuthenticated,
+} from '../controllers/authController';
 
 export const fileRoutes = (app) => {
+    app.use(isUserAuthenticated);
     app.route('/files')
         .get((req, res, next) => {
             // middleware

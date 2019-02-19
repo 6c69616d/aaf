@@ -1,9 +1,5 @@
 <template>
   <div class="Login">
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
-    >
     <md-card>
       <md-toolbar>
         <h1 class="md-title">Login</h1>
@@ -11,14 +7,18 @@
       <form id="form" novalidate @submit.prevent>
         <md-field>
           <label>Email</label>
-          <md-input type="email" v-model="loginDetails.email"></md-input>
+          <md-input type="email" v-model="email"></md-input>
         </md-field>
         <md-field>
           <label>Password</label>
-          <md-input type="password" v-model="loginDetails.password"></md-input>
+          <md-input type="password" v-model="password"></md-input>
         </md-field>
 
-        <md-button type="submit" class="md-raised md-primary" @click="login()">Login</md-button>
+        <md-button
+          type="submit"
+          class="md-raised md-primary"
+          @click="submitLogin(email, password)"
+        >Login</md-button>
       </form>
     </md-card>
   </div>
@@ -28,12 +28,24 @@ export default {
   name: "Login",
   data() {
     return {
-      loginDetails: {}
+      email: "",
+      password: ""
     };
   },
   methods: {
-    login() {
-      window.location.href = `/files/`;
+    submitLogin(email, password) {
+      this.$axios
+        .post("http://localhost:3030/login", {
+          email,
+          password
+        })
+        .then(response => {
+          localStorage.token = response.data.token;
+          window.location.href = "/files/";
+        })
+        .catch(error => {
+          console.log("Login Failed");
+        });
     }
   }
 };
