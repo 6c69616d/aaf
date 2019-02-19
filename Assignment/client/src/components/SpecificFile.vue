@@ -105,8 +105,14 @@ export default {
         },
         editSpecificFile(fileId) {
             this.$axios
-                .put(`http://localhost:3030/files/${fileId}`, { locked: true });
-            window.location.href = `/editSpecificFile/${fileId}`;
+                .get(`http://localhost:3030/files/${fileId}`)
+                .then((response) => {
+                    if (!response.data.locked) {
+                      window.location.href = `/editSpecificFile/${fileId}`;
+                    } else {
+                      window.location.reload();
+                    }
+                })
         },
     },
 };
