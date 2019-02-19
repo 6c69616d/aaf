@@ -3,6 +3,7 @@
     <md-table md-card>
       <md-table-toolbar>
         <h1 class="md-title">All Files</h1>
+        <md-input type="test" v-model="search" placeholder="Search"></md-input>
         <md-button id="addBtn" class="md-icon-button md-raised md-primary" @click="addFile()">
           <md-icon>add</md-icon>
         </md-button>
@@ -18,7 +19,7 @@
       <md-table-row
         md-selectable="single"
         class="file"
-        v-for="file in AllFiles"
+        v-for="file in filteredList"
         :key="file._id"
         @click="onSelect(file._id)"
       >
@@ -34,28 +35,64 @@
 
 <script>
 export default {
-    name: 'AllFiles',
-    data() {
-        return {
-            AllFiles: [],
-            selected: {},
-        };
+  name: "AllFiles",
+  data() {
+    return {
+      AllFiles: [],
+      selected: {},
+      search: ""
+    };
+  },
+  mounted() {
+    this.$axios.get("http://localhost:3030/files").then(response => {
+      this.AllFiles = response.data;
+    });
+  },
+  computed: {
+    filteredList() {
+      return this.AllFiles.filter(file => {
+        console.log(file.metadata[file.metadata.length - 1]);
+        return (
+          (!file.metadata[file.metadata.length - 1].hasOwnProperty("title") &&
+            !this.search.toLowerCase()) ||
+          (file.metadata[file.metadata.length - 1].hasOwnProperty("title") &&
+            file.metadata[file.metadata.length - 1].title
+              .toLowerCase()
+              .includes(this.search.toLowerCase())) ||
+          (!file.metadata[file.metadata.length - 1].hasOwnProperty(
+            "version_author"
+          ) &&
+            !this.search.toLowerCase()) ||
+          (file.metadata[file.metadata.length - 1].hasOwnProperty(
+            "version_author"
+          ) &&
+            file.metadata[file.metadata.length - 1].version_author
+              .toLowerCase()
+              .includes(this.search.toLowerCase())) ||
+          (!file.metadata[file.metadata.length - 1].hasOwnProperty(
+            "version_number"
+          ) &&
+            !this.search) ||
+          (file.metadata[file.metadata.length - 1].hasOwnProperty(
+            "version_number"
+          ) &&
+            file.metadata[file.metadata.length - 1].version_number
+              .toString()
+              .includes(this.search))
+        );
+      });
+    }
+  },
+  methods: {
+    onSelect(file) {
+      console.log("onSelect called");
+      this.selected = file;
+      window.location.href = `/specificFile/${file}`;
     },
-    mounted() {
-        this.$axios.get('http://localhost:3030/files').then((response) => {
-            this.AllFiles = response.data;
-        });
-    },
-    methods: {
-        onSelect(file) {
-            console.log('onSelect called');
-            this.selected = file;
-            window.location.href = `/specificFile/${file}`;
-        },
-        addFile() {
-            window.location.href = '/addFile/';
-        },
-    },
+    addFile() {
+      window.location.href = "/addFile/";
+    }
+  }
 };
 </script>
 
