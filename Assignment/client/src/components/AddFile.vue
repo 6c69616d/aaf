@@ -93,8 +93,8 @@ export default {
 
                 })
                 .then((response) => {
-                    // window.location.href = `/files/`;
-                    console.log(response);
+                    window.location.href = `/files/`;
+        
                 })
                 .catch((error) => {
                     console.log('Unable to add new file');
