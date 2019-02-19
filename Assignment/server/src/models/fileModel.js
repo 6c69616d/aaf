@@ -39,9 +39,9 @@ export const FileSchema = new mongoose.Schema({
                     type: Array,
                 },
                 file_size: {
-                    type: String,
+                    type: Number,
                 },
-            }
+            },
 
         ],
     locked: {
