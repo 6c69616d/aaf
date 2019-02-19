@@ -47,6 +47,6 @@ export default {
 
 <style lang="scss" scoped>
 .md-toolbar {
-  background-color: #cfc7ba;
+  background-color: #FF8C00;
 }
 </style>
