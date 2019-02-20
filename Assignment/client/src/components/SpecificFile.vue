@@ -20,7 +20,7 @@
         <md-table-row>
           <md-table-cell>{{ file.name_with_file_type }}</md-table-cell>
           <md-table-cell>{{ file.original_author }}</md-table-cell>
-          <md-table-cell>{{ new Date(file.creation_date).toLocaleDateString()}}</md-table-cell>
+          <md-table-cell> <span v-if="v.version_date != null">{{ new Date(file.creation_date).toLocaleDateString() }}</span></md-table-cell>
           <md-table-cell>{{ file.mime_type }}</md-table-cell>
           <md-table-cell>{{ file.locked }}</md-table-cell>
           <md-table-cell>
@@ -59,7 +59,7 @@
           <md-table-cell>{{ v.title }}</md-table-cell>
           <md-table-cell>{{ v.version_number }}</md-table-cell>
           <md-table-cell>{{ v.version_author }}</md-table-cell>
-          <md-table-cell>{{ new Date(v.version_date).toLocaleDateString() }}</md-table-cell>
+          <md-table-cell> <span v-if="v.version_date != null">{{ new Date(v.version_date).toLocaleDateString() }} </span></md-table-cell>
           <md-table-cell>{{ v.file_size }}</md-table-cell>
           <md-table-cell>{{ v.keywords_tags }}</md-table-cell>
         </md-table-row>
