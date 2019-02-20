@@ -65,89 +65,91 @@
   </div>
 </template>
 <script>
-import { validationMixin } from "vuelidate";
-import { required, email } from "vuelidate/lib/validators";
+import { validationMixin } from 'vuelidate';
+import { required } from 'vuelidate/lib/validators';
+
 export default {
-  name: "AddFile",
-  mixins: [validationMixin],
-  data() {
-    return {
-      file: {
-        name_with_file_type: "",
-        original_author: "",
-        creation_date: "",
-        mime_type: "",
-        title: "",
-        version_number: "1",
-        version_author: "",
-        version_date: new Date(),
-        keywords_tags: "",
-        file_size: ""
-      }
-    };
-  },
-  validations: {
-    file: {
-      name_with_file_type: {
-        required
-      },
-      original_author: {
-        required
-      },
-      creation_date: {
-        required
-      },
-      mime_type: {
-        required
-      },
-      title: {
-        required
-      },
-      version_author: {
-        required
-      }
-    }
-  },
-  methods: {
-    getValidationClass(fieldName) {
-      const field = this.$v.file[fieldName];
-
-      if (field) {
+    name: 'AddFile',
+    mixins: [validationMixin],
+    data() {
         return {
-          "md-invalid": field.$invalid && field.$dirty
+          file: {
+            name_with_file_type: "",
+            original_author: "",
+            creation_date: "",
+            mime_type: "",
+            title: "",
+            version_number: "1",
+            version_author: "",
+            version_date: new Date(),
+            keywords_tags: "",
+            file_size: ""
+          }
         };
-      }
-    },
-    validateAdd(file) {
-      this.$v.$touch();
+      },
+      validations: {
+        file: {
+          name_with_file_type: {
+            required
+          },
+          original_author: {
+            required
+          },
+          creation_date: {
+            required
+          },
+          mime_type: {
+            required
+          },
+          title: {
+            required
+          },
+          version_author: {
+            required
+          }
+        }
+      },
+      methods: {
+        getValidationClass(fieldName) {
+          const field = this.$v.file[fieldName];
 
-      if (!this.$v.$invalid) {
-        this.submitAddFile(file);
+          if (field) {
+            return {
+              "md-invalid": field.$invalid && field.$dirty
+            };
+          }
+        },
+        validateAdd(file) {
+          this.$v.$touch();
+
+          if (!this.$v.$invalid) {
+            this.submitAddFile(file);
+          }
+        },
+        submitAddFile(newFile) {
+          const keywords = newFile.keywords_tags.split(',');
+          this.$axios
+            .post("http://localhost:3030/files", {
+              name_with_file_type: newFile.name_with_file_type,
+              original_author: newFile.original_author,
+              creation_date: newFile.creation_date,
+              mime_type: newFile.mime_type,
+              title: newFile.title,
+              version_number: newFile.version_number,
+              version_author: newFile.version_author,
+              version_date: newFile.version_date,
+              keywords_tags: keywords,
+              file_size: newFile.file_size
+            })
+            .then(response => {
+              window.location.href = `/files/`;
+            })
+            .catch(error => {
+              alert("Unable to add new file");
+            });
+        }
       }
-    },
-    submitAddFile(newFile) {
-      this.$axios
-        .post("http://localhost:3030/files", {
-          name_with_file_type: newFile.name_with_file_type,
-          original_author: newFile.original_author,
-          creation_date: newFile.creation_date,
-          mime_type: newFile.mime_type,
-          title: newFile.title,
-          version_number: newFile.version_number,
-          version_author: newFile.version_author,
-          version_date: newFile.version_date,
-          keywords_tags: newFile.keywords_tags,
-          file_size: newFile.file_size
-        })
-        .then(response => {
-          window.location.href = `/files/`;
-        })
-        .catch(error => {
-          alert("Unable to add new file");
-        });
-    }
-  }
-};
+  };
 </script>
 
 <style lang="scss" scoped>
