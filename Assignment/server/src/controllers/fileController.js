@@ -49,26 +49,6 @@ export const getFileWithId = (req, res) => {
     });
 };
 
-export const getVersionOfFile = (req, res) => {
-    File.findById(req.params.fileId, (err, file) => {
-        if (err) {
-            res.send(err);
-        } else {
-            const versionNumber = req.params.version_number - 1;
-            res.json({
-                _id: file._id,
-                name: file.name,
-                title: file.data[versionNumber].title,
-                version_number: file.data[versionNumber].version_number,
-                version_author: file.data[versionNumber].author,
-                version_date: file.data[versionNumber].created_date,
-                keywords_tags: file.data[versionNumber].keywords_tags,
-                file_size: req.body.file_size,
-            });
-        }
-    });
-};
-
 export const updateFile = (req, res) => {
     File.findById(req.params.fileId, (err, file) => {
         if (err) {
@@ -95,6 +75,26 @@ export const updateFile = (req, res) => {
         }
     });
 };
+
+export const lockFile = (req, res) => {
+    File.findById(req.params.fileId, (err, file) => {
+        if (err) {
+            res.send(err);
+        } else {
+            const fileToUpdate = file;
+            fileToUpdate.locked = true;
+            File.findOneAndUpdate({ _id: req.params.fileId }, new File(fileToUpdate), { new: true },
+                (err2, updatedFile) => {
+                    if (err2) {
+                        res.send(err2);
+                    } else {
+                        res.json(updatedFile);
+                    }
+                });
+        }
+    });
+};
+
 
 export const deleteFile = (req, res) => {
     // changed to deleteOne as remove deprecated

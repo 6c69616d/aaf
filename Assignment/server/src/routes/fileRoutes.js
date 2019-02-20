@@ -2,7 +2,7 @@ import {
     addNewFile,
     getFiles,
     getFileWithId,
-    getVersionOfFile,
+    lockFile,
     updateFile,
     deleteFile,
     deleteAllTheFiles,
@@ -36,6 +36,6 @@ export const fileRoutes = (app) => {
         // delete request
         .delete(deleteFile);
 
-    app.route('/files/:fileId/:version_number')
-        .get(getVersionOfFile);
+    app.route('/files/:fileId/lock')
+        .put(lockFile);
 };

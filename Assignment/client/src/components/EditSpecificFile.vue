@@ -130,7 +130,7 @@ export default {
   mounted() {
     const currentUrl = window.location.pathname.split("/");
     const fileId = currentUrl[2];
-    this.$axios.put(`http://localhost:3030/files/${fileId}`, { locked: true });
+    this.$axios.put(`http://localhost:3030/files/${fileId}/lock`);
     this.$axios
       .get(`http://localhost:3030/files/${fileId}`) // Pass in ID as param
       .then(response => {

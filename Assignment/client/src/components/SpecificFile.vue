@@ -69,52 +69,61 @@
 </template>
 <script>
 export default {
-    name: 'SpecificFile',
-    data() {
-        return {
-            file: {},
-            selected: {},
-            first: false,
-        };
-    },
-    mounted() {
-        const currentUrl = window.location.pathname.split('/');
-        const fileId = currentUrl[2];
-        this.$axios
-            .get(`http://localhost:3030/files/${fileId}`) // Pass in ID as param
-            .then((response) => {
-                this.file = response.data;
-                document.getElementById('editBtn').disabled = this.file.locked;
-                document.getElementById('deleteBtn').disabled = this.file.locked;
-            })
-            .catch((error) => {
-                console.log('Data Reterival Failed');
-            });
-    },
-    methods: {
-        deleteSpecificFile(fileId) {
+  name: "SpecificFile",
+  data() {
+    return {
+      file: {},
+      selected: {},
+      first: false
+    };
+  },
+  mounted() {
+    const currentUrl = window.location.pathname.split("/");
+    const fileId = currentUrl[2];
+    this.$axios
+      .get(`http://localhost:3030/files/${fileId}`) // Pass in ID as param
+      .then(response => {
+        this.file = response.data;
+        document.getElementById("editBtn").disabled = this.file.locked;
+        document.getElementById("deleteBtn").disabled = this.file.locked;
+      })
+      .catch(error => {
+        console.log("Data Reterival Failed");
+      });
+  },
+  methods: {
+    deleteSpecificFile(fileId) {
+      this.$axios
+        .get(`http://localhost:3030/files/${fileId}`)
+        .then(response => {
+          if (!response.data.locked) {
             this.$axios
-                .delete(`http://localhost:3030/files/${fileId}`)
-                .then(() => {
-                    this.file = [];
-                    window.location.href = '/files';
-                })
-                .catch((error) => {
-                    console.log('Delete Failed');
-                });
-        },
-        editSpecificFile(fileId) {
-            this.$axios
-                .get(`http://localhost:3030/files/${fileId}`)
-                .then((response) => {
-                    if (!response.data.locked) {
-                      window.location.href = `/editSpecificFile/${fileId}`;
-                    } else {
-                      window.location.reload();
-                    }
-                })
-        },
+              .delete(`http://localhost:3030/files/${fileId}`)
+              .then(() => {
+                this.file = [];
+                window.location.href = "/files";
+              })
+
+              .catch(error => {
+                console.log("Delete Failed");
+              });
+          } else {
+            window.location.reload();
+          }
+        });
     },
+    editSpecificFile(fileId) {
+      this.$axios
+        .get(`http://localhost:3030/files/${fileId}`)
+        .then(response => {
+          if (!response.data.locked) {
+            window.location.href = `/editSpecificFile/${fileId}`;
+          } else {
+            window.location.reload();
+          }
+        });
+    }
+  }
 };
 </script>
 
