@@ -31,8 +31,8 @@ export default {
   data() {
     return {
       form: {
-        email: null,
-        password: null,
+        email: '',
+        password: '',
       }
     };
   },
@@ -71,12 +71,15 @@ export default {
           password
         })
         .then(response => {
-          localStorage.token = response.data.token;
-          window.location.href = "/files/";
+          if(response.data.token) {
+            localStorage.token = response.data.token;
+            window.location.href = "/files/";
+          } else {
+            alert("Incorrect Login Details");
+          }
         })
         .catch(error => {
           console.log("Login Failed");
-          alert("Incorrect Login Details");
         });
     }
   }

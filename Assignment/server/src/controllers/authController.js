@@ -7,7 +7,7 @@ export const login = (req, res) => {
     User.findOne({ email: req.body.email }, (err, user) => {
         if (err) {
             res.send(err);
-        } else if (user.password === req.body.password) {
+        } else if (user && user.password === req.body.password) {
             const token = `${user.email}+${Date.now()}+${user.firstName}`;
             const newUser = user;
             newUser.token = token;
@@ -19,7 +19,7 @@ export const login = (req, res) => {
                 }
             });
         } else {
-            res.end();
+            res.send({error: 'Username or password is not correct'});
         }
     });
 };
