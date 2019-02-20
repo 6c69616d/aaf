@@ -18,9 +18,9 @@
           <md-table-head></md-table-head>
         </md-table-row>
         <md-table-row>
-          <md-table-cell>{{ file.nameWithFileType }}</md-table-cell>
+          <md-table-cell>{{ file.name_with_file_type }}</md-table-cell>
           <md-table-cell>{{ file.original_author }}</md-table-cell>
-          <md-table-cell>{{ file.creation_date }}</md-table-cell>
+          <md-table-cell>{{ new Date(file.creation_date).toLocaleDateString()}}</md-table-cell>
           <md-table-cell>{{ file.mime_type }}</md-table-cell>
           <md-table-cell>{{ file.locked }}</md-table-cell>
           <md-table-cell>
@@ -59,7 +59,7 @@
           <md-table-cell>{{ v.title }}</md-table-cell>
           <md-table-cell>{{ v.version_number }}</md-table-cell>
           <md-table-cell>{{ v.version_author }}</md-table-cell>
-          <md-table-cell>{{ v.version_date }}</md-table-cell>
+          <md-table-cell>{{ new Date(v.version_date).toLocaleDateString() }}</md-table-cell>
           <md-table-cell>{{ v.file_size }}</md-table-cell>
           <md-table-cell>{{ v.keywords_tags }}</md-table-cell>
         </md-table-row>
