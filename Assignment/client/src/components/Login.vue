@@ -7,13 +7,13 @@
       <form id="form" novalidate @submit.prevent="validateLogin(form)">
         <md-field :class="getValidationClass('email')">
           <label>Email</label>
-          <md-input name="email" type="email" v-model="form.email"></md-input>
+          <md-input name="email" type="email" v-model="form.email"/>
           <span class="md-error" v-if="!$v.form.email.required">The email is required</span>
           <span class="md-error" v-else-if="!$v.form.email.email">Invalid email</span>
         </md-field>
         <md-field :class="getValidationClass('password')">
           <label>Password</label>
-          <md-input name="password" type="password" v-model="form.password"></md-input>
+          <md-input name="password" type="password" v-model="form.password"/>
           <span class="md-error" v-if="!$v.form.password.required">The password is required</span>
         </md-field>
 

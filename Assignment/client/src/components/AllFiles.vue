@@ -23,7 +23,7 @@
         :key="file._id"
         @click="onSelect(file._id)"
       >
-        <md-table-cell>{{ file.nameWithFileType }}</md-table-cell>
+        <md-table-cell>{{ file.name_with_file_type}}</md-table-cell>
         <md-table-cell>{{ file.mime_type }}</md-table-cell>
         <md-table-cell>{{ file.metadata[file.metadata.length - 1].title }}</md-table-cell>
         <md-table-cell>{{ file.metadata[file.metadata.length - 1].version_number }}</md-table-cell>
@@ -78,12 +78,12 @@ export default {
             file.metadata[file.metadata.length - 1].version_number
               .toString()
               .includes(this.search)) ||
-          (!file.nameWithFileType
+          (!file.name_with_file_type
           ) &&
             (!this.search.toLowerCase()) ||
-          (file.nameWithFileType
+          (file.name_with_file_type
           ) &&
-            file.nameWithFileType
+            file.name_with_file_type
               .toLowerCase()
               .includes(this.search.toLowerCase()) ||           
           (!file.mime_type

@@ -7,19 +7,19 @@
       <form id="form" novalidate @submit.prevent="validateForm(file._id, file.metadata[file.metadata.length - 1])">
         <md-field>
           <label>Name With File Type</label>
-          <md-input type="text" disabled v-model="file.nameWithFileType"></md-input>
+          <md-input type="text" disabled v-model="file.name_with_file_type"/>
         </md-field>
         <md-field>
           <label>Original Author</label>
-          <md-input type="text" disabled v-model="file.original_author"></md-input>
+          <md-input type="text" disabled v-model="file.original_author"/>
         </md-field>
         <md-field>
           <label>Creation Date</label>
-          <md-input input="text" disabled v-model="file.creation_date"></md-input>
+          <md-input input="text" disabled v-model="file.creation_date"/>
         </md-field>
         <md-field>
           <label>Mime Type</label>
-          <md-input type="text" disabled v-model="file.mime_type"></md-input>
+          <md-input type="text" disabled v-model="file.mime_type"/>
         </md-field>
         <md-field :class="getValidationClass('title')">
           <label for="title">Title</label>
@@ -28,16 +28,16 @@
             name="title"
             id="title"
             v-model="file.metadata[file.metadata.length - 1].title" @keyup="updateFormProperties(file)"
-          ></md-input>
+          />
           <span class="md-error" v-if="!$v.form.title.required">The title is required</span>
         </md-field>
         <md-field>
           <label>Version Number</label>
-          <md-input type="number" v-model="file.metadata[file.metadata.length - 1].version_number"></md-input>
+          <md-input type="number" v-model="file.metadata[file.metadata.length - 1].version_number"/>
         </md-field>
         <md-field :class="getValidationClass('version_author')">
           <label>Version Author</label>
-          <md-input type="text" name="version_author" v-model="file.metadata[file.metadata.length - 1].version_author" @keyup="updateFormProperties(file)"></md-input>
+          <md-input type="text" name="version_author" v-model="file.metadata[file.metadata.length - 1].version_author" @keyup="updateFormProperties(file)"/>
           <span class="md-error" v-if="!$v.form.version_author.required">The author is required</span>
         </md-field>
 
@@ -48,11 +48,11 @@
         />
         <md-field>
           <label>Keywords/Tags</label>
-          <md-input type="text" v-model="file.metadata[file.metadata.length - 1].keywords_tags"></md-input>
+          <md-input type="text" v-model="file.metadata[file.metadata.length - 1].keywords_tags"/>
         </md-field>
         <md-field>
           <label>File Size (MB)</label>
-          <md-input type="number" v-model="file.metadata[file.metadata.length - 1].file_size"></md-input>
+          <md-input type="number" v-model="file.metadata[file.metadata.length - 1].file_size"/>
         </md-field>
         <md-button type="submit" class="md-raised md-primary">Edit</md-button>
       </form>

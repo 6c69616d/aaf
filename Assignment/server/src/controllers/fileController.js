@@ -5,7 +5,7 @@ const File = mongoose.model('file', FileSchema);
 
 export const addNewFile = (req, res) => {
     const newFile = new File({
-        nameWithFileType: req.body.nameWithFileType,
+        name_with_file_type: req.body.name_with_file_type,
         original_author: req.body.original_author,
         creation_date: req.body.creation_date,
         mime_type: req.body.mime_type,

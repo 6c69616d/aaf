@@ -1,12 +1,13 @@
 import mongoose from 'mongoose';
 
 export const FileSchema = new mongoose.Schema({
-    nameWithFileType: {
+    name_with_file_type: {
         type: String,
         required: 'Enter a file name and extension',
     },
     original_author: {
         type: String,
+        required: 'Enter a original author',
     },
     creation_date: {
         type: Date,
