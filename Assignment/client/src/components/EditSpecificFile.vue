@@ -31,14 +31,15 @@
           />
           <span class="md-error" v-if="!$v.form.title.required">The title is required</span>
         </md-field>
-        <md-field>
+        <md-field :class="getValidationClass('version_number')">
           <label>Version Number</label>
-          <md-input type="number" v-model="file.metadata[file.metadata.length - 1].version_number"/>
+          <md-input name="version_number" type="number" v-model="file.metadata[file.metadata.length - 1].version_number" @keyup="updateFormProperties(file)"/>
+          <span class="md-error" v-if="!$v.form.version_number.required">The version number is required</span>
         </md-field>
         <md-field :class="getValidationClass('version_author')">
           <label>Version Author</label>
           <md-input type="text" name="version_author" v-model="file.metadata[file.metadata.length - 1].version_author" @keyup="updateFormProperties(file)"/>
-          <span class="md-error" v-if="!$v.form.version_author.required">The author is required</span>
+          <span class="md-error" v-if="!$v.form.version_author.required">The version author is required</span>
         </md-field>
 
         <label>Version Date</label>
@@ -71,6 +72,7 @@ export default {
       form: {
         title: '',
         version_author: '',
+        version_number: '',
       }
     };
   },
@@ -81,6 +83,9 @@ export default {
         required
       },
       version_author: {
+        required
+      },
+      version_number: {
         required
       }
     }
