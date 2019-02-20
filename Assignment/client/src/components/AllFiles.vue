@@ -3,7 +3,7 @@
     <md-table md-card>
       <md-table-toolbar>
         <h1 class="md-title">All Files</h1>
-        <md-input type="test" v-model="search" placeholder="Search"></md-input>
+        <input type="test" v-model="search" placeholder="Search"/>
         <md-button id="addBtn" class="md-icon-button md-raised md-primary" @click="addFile()">
           <md-icon>add</md-icon>
         </md-button>
@@ -51,7 +51,6 @@ export default {
   computed: {
     filteredList() {
       return this.AllFiles.filter(file => {
-        console.log(file.metadata[file.metadata.length - 1]);
         return (
           (!file.metadata[file.metadata.length - 1].hasOwnProperty("title") &&
             !this.search.toLowerCase()) ||
@@ -101,7 +100,6 @@ export default {
   },
   methods: {
     onSelect(file) {
-      console.log("onSelect called");
       this.selected = file;
       window.location.href = `/specificFile/${file}`;
     },
