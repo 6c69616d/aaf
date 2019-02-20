@@ -143,7 +143,7 @@ export default {
           window.location.href = `/files/`;
         })
         .catch(error => {
-          console.log("Unable to add new file");
+          alert("Unable to add new file");
         });
     }
   }

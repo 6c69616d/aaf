@@ -114,7 +114,7 @@ export default {
           window.location.href = `/specificFile/${fileId}`;
         })
         .catch(error => {
-          console.log("Unable to process new version");
+          alert("Unable to process new version");
         });
     },
     validateForm(fileId, file) {
@@ -143,7 +143,7 @@ export default {
         this.updateFormProperties(response.data);
       })
       .catch(error => {
-        console.log("Data Reterival Failed");
+        alert("Data Reterival Failed");
       });
   },
 };

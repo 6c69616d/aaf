@@ -79,7 +79,7 @@ export default {
           }
         })
         .catch(error => {
-          console.log("Login Failed");
+          alert("Login Failed");
         });
     }
   }

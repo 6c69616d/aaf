@@ -88,7 +88,7 @@ export default {
         document.getElementById("deleteBtn").disabled = this.file.locked;
       })
       .catch(error => {
-        console.log("Data Reterival Failed");
+        alert("Data Reterival Failed");
       });
   },
   methods: {
@@ -105,7 +105,7 @@ export default {
               })
 
               .catch(error => {
-                console.log("Delete Failed");
+                alert("Delete Failed");
               });
           } else {
             window.location.reload();

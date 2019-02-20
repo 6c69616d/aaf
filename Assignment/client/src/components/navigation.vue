@@ -38,7 +38,7 @@ export default {
           window.location.href = "/login/";
         })
         .catch(error => {
-          console.log("Logout Failed");
+          alert("Logout Failed");
         });
     }
   }
