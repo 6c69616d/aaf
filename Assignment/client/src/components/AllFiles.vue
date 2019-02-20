@@ -9,8 +9,8 @@
         </md-button>
       </md-table-toolbar>
       <md-table-row>
-        <md-table-head>ID</md-table-head>
         <md-table-head>Name With File Type</md-table-head>
+        <md-table-head>Mime Type</md-table-head>
         <md-table-head>Title</md-table-head>
         <md-table-head>Version Number</md-table-head>
         <md-table-head>Version Author</md-table-head>
@@ -23,8 +23,8 @@
         :key="file._id"
         @click="onSelect(file._id)"
       >
-        <md-table-cell>{{ file._id }}</md-table-cell>
         <md-table-cell>{{ file.nameWithFileType }}</md-table-cell>
+        <md-table-cell>{{ file.mime_type }}</md-table-cell>
         <md-table-cell>{{ file.metadata[file.metadata.length - 1].title }}</md-table-cell>
         <md-table-cell>{{ file.metadata[file.metadata.length - 1].version_number }}</md-table-cell>
         <md-table-cell>{{ file.metadata[file.metadata.length - 1].version_author }}</md-table-cell>
@@ -78,7 +78,23 @@ export default {
           ) &&
             file.metadata[file.metadata.length - 1].version_number
               .toString()
-              .includes(this.search))
+              .includes(this.search)) ||
+          (!file.nameWithFileType
+          ) &&
+            (!this.search.toLowerCase()) ||
+          (file.nameWithFileType
+          ) &&
+            file.nameWithFileType
+              .toLowerCase()
+              .includes(this.search.toLowerCase()) ||           
+          (!file.mime_type
+          ) &&
+            (!this.search.toLowerCase()) ||
+          (file.mime_type
+          ) &&
+            file.mime_type
+              .toLowerCase()
+              .includes(this.search.toLowerCase())
         );
       });
     }
