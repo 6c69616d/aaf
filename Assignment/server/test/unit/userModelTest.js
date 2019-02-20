@@ -54,7 +54,7 @@ describe('user', ()=> {
         var u = new User();
  
         u.validate(function(err) {
-            expect(u.created_date).to.exist;
+            expect(err.errors.created_date).to.not.exist;
             done();
         });
     });

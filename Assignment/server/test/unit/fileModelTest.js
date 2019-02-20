@@ -36,3 +36,15 @@ describe('file', ()=> {
         });
     });
 });
+
+describe('file', ()=> {
+    it('should be invalid if locked is empty', function(done) {
+        var f = new File();
+        
+        f.validate(function(err) {
+            expect(err.errors.locked).to.not.exist;
+            done();
+        });
+    });
+});
+
