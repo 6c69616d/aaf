@@ -20,7 +20,7 @@
         <md-table-row>
           <md-table-cell>{{ file.name_with_file_type }}</md-table-cell>
           <md-table-cell>{{ file.original_author }}</md-table-cell>
-          <md-table-cell> <span v-if="v.version_date != null">{{ new Date(file.creation_date).toLocaleDateString() }}</span></md-table-cell>
+          <md-table-cell> <span v-if="file.creation_date != null">{{ new Date(file.creation_date).toLocaleDateString() }}</span></md-table-cell>
           <md-table-cell>{{ file.mime_type }}</md-table-cell>
           <md-table-cell>{{ file.locked }}</md-table-cell>
           <md-table-cell>
