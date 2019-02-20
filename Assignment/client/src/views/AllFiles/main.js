@@ -10,7 +10,7 @@ import App from './App.vue';
 Vue.config.productionTip = false;
 const token = localStorage.getItem('token');
 if (token) {
-  Axios.defaults.headers.Authorization = token;
+    Axios.defaults.headers.Authorization = token;
 }
 Vue.prototype.$axios = Axios;
 Vue.use(VueMaterial);
