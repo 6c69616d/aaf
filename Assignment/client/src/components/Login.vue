@@ -23,66 +23,68 @@
   </div>
 </template>
 <script>
-import { validationMixin } from "vuelidate";
-import { required, email } from "vuelidate/lib/validators";
+import { validationMixin } from 'vuelidate';
+import { required, email } from 'vuelidate/lib/validators';
+
 export default {
-  name: "Login",
-  mixins: [validationMixin],
-  data() {
-    return {
-      form: {
-        email: '',
-        password: '',
-      }
-    };
-  },
-  validations: {
-    form: {
-      email: {
-        required,
-        email
-      },
-      password: {
-        required
-      }
-    }
-  },
-  methods: {
-    getValidationClass(fieldName) {
-      const field = this.$v.form[fieldName];
-
-      if (field) {
+    name: 'Login',
+    mixins: [validationMixin],
+    data() {
         return {
-          "md-invalid": field.$invalid && field.$dirty
+            form: {
+                email: '',
+                password: '',
+            },
         };
-      }
     },
-    validateLogin(form) {
-      this.$v.$touch();
+    validations: {
+        form: {
+            email: {
+                required,
+                email,
+            },
+            password: {
+                required,
+            },
+        },
+    },
+    methods: {
+        getValidationClass(fieldName) {
+            const field = this.$v.form[fieldName];
 
-      if (!this.$v.$invalid) {
-        this.submitLogin(form.email, form.password);
-      }
+            if (field) {
+                return {
+                    'md-invalid': field.$invalid && field.$dirty,
+                };
+            }
+        },
+        validateLogin(form) {
+            this.$v.$touch();
+
+            if (!this.$v.$invalid) {
+                this.submitLogin(form.email, form.password);
+            }
+        },
+        submitLogin(email, password) {
+            this.$axios
+                .post('http://localhost:3030/login', {
+                    email,
+                    password,
+                })
+                .then((response) => {
+                    if (response.data.token) {
+                        localStorage.token = response.data.token;
+                        window.location.href = '/files/';
+                    } else {
+                        alert('Incorrect Login Details');
+                    }
+                })
+                .catch((error) => {
+                    console.log(error);
+                    alert('Login Failed');
+                });
+        },
     },
-    submitLogin(email, password) {
-      this.$axios
-        .post("http://localhost:3030/login", {
-          email,
-          password
-        })
-        .then(response => {
-          if(response.data.token) {
-            localStorage.token = response.data.token;
-            window.location.href = "/files/";
-          } else {
-            alert("Incorrect Login Details");
-          }
-        })
-        .catch(error => {
-          alert("Login Failed");
-        });
-    }
-  }
 };
 </script>
 

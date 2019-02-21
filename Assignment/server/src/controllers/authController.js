@@ -19,7 +19,7 @@ export const login = (req, res) => {
                 }
             });
         } else {
-            res.send({error: 'Username or password is not correct'});
+            res.send({ error: 'Username or password is not correct' });
         }
     });
 };
