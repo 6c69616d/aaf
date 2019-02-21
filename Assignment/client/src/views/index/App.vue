@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <Navigation/>
-    <img alt="Vue logo" src="../../assets/logo.png">
+    <h2>Welcome to your file management system </h2>
   </div>
 </template>
 

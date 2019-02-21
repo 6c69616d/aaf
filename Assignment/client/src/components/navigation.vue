@@ -20,21 +20,26 @@
 
 <script>
 export default {
-  name: "LastRowFixed",
+  name: 'LastRowFixed',
   data() {
     return {
       menuVisible: true
     };
   },
   methods: {
+    //check the user has a token
     authenticated() {
       return localStorage.token;
     },
+    // method called when logout button clicked
     submitLogout() {
       this.$axios
+        // post to the api so logout can be processed 
         .post("http://localhost:3030/logout")
         .then(() => {
+          // delete the token from browser storage
           delete localStorage.token;
+          // navigate to the login screen
           window.location.href = "/login/";
         })
         .catch(error => {

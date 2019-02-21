@@ -78,12 +78,15 @@ export default {
     };
   },
   mounted() {
+    // get the file id from the url
     const currentUrl = window.location.pathname.split("/");
     const fileId = currentUrl[2];
     this.$axios
-      .get(`http://localhost:3030/files/${fileId}`) // Pass in ID as param
+      // get the file with the fileId from the database using the api
+      .get(`http://localhost:3030/files/${fileId}`)
       .then(response => {
         this.file = response.data;
+        // stop the user editing and deleting the file if the file is locked
         document.getElementById("editBtn").disabled = this.file.locked;
         document.getElementById("deleteBtn").disabled = this.file.locked;
       })
@@ -92,33 +95,42 @@ export default {
       });
   },
   methods: {
+    // method called from the delete button
     deleteSpecificFile(fileId) {
       this.$axios
+        // get the file with the fileId from the database using the api
         .get(`http://localhost:3030/files/${fileId}`)
         .then(response => {
+          // if the file is not locked proceed with the delete
           if (!response.data.locked) {
             this.$axios
+              // delete the file from the database using the api
               .delete(`http://localhost:3030/files/${fileId}`)
               .then(() => {
                 this.file = [];
+                // redirect to the all files screen
                 window.location.href = "/files";
               })
-
               .catch(error => {
                 alert("Delete Failed");
               });
           } else {
+            // reload screen so edit and delete buttons become disbaled
             window.location.reload();
           }
         });
     },
+    // method called from edit button
     editSpecificFile(fileId) {
       this.$axios
+        // get the file with the fileId from the database using the api 
         .get(`http://localhost:3030/files/${fileId}`)
         .then(response => {
+           // if the file is not locked navigate to the edit form
           if (!response.data.locked) {
             window.location.href = `/editSpecificFile/${fileId}`;
           } else {
+            // reload screen so edit and delete buttons become disbaled
             window.location.reload();
           }
         });

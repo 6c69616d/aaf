@@ -49,6 +49,7 @@ export default {
         },
     },
     methods: {
+        // set the field to have the invalid styling if invalid or dirty
         getValidationClass(fieldName) {
             const field = this.$v.form[fieldName];
 
@@ -60,20 +61,26 @@ export default {
         },
         validateLogin(form) {
             this.$v.$touch();
-
+            
+        // make sure none of the fields are invalid
             if (!this.$v.$invalid) {
+                // if none of them are invalid proceed with login
                 this.submitLogin(form.email, form.password);
             }
         },
         submitLogin(email, password) {
             this.$axios
+                // post to the api with the email and password so login can be processed
                 .post('http://localhost:3030/login', {
                     email,
                     password,
                 })
                 .then((response) => {
+                    // if a token is returned
                     if (response.data.token) {
+                        // store token in browser storage
                         localStorage.token = response.data.token;
+                        // navigate to the all files screen
                         window.location.href = '/files/';
                     } else {
                         alert('Incorrect Login Details');

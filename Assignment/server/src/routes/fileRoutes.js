@@ -12,30 +12,33 @@ import {
 } from '../controllers/authController';
 
 export const fileRoutes = (app) => {
+    // make sure user is authenticated to access these routes
     app.use(isUserAuthenticated);
+    // route for actions on all the files
     app.route('/files')
-        .get((req, res, next) => {
-            // middleware
-            console.log(`Request from: ${req.originalUrl}`);
-            console.log(`Request type: ${req.method}`);
-            next();
-        }, getFiles)
 
+        // http get using the getFiles method
+        .get(getFiles)
+
+        // http post using the addNewFile method
         .post(addNewFile)
 
+        // http delete using the deleteAllTheFile method
         .delete(deleteAllTheFiles);
 
-
+    // route for actions on a specific file
     app.route('/files/:fileId')
-        // get specific user
+        // http get using the getFileWithId method
         .get(getFileWithId)
 
-        // put request
+        // http put using updateFile method
         .put(updateFile)
 
-        // delete request
+        // http delete using deleteFile method
         .delete(deleteFile);
 
+    // route to lock a specific file
     app.route('/files/:fileId/lock')
+        // http put using lockFile method
         .put(lockFile);
 };

@@ -11,20 +11,21 @@
 </template>
 
 <script>
-import SpecificFile from "../../components/SpecificFile.vue";
-import Navigation from "../../components/navigation.vue";
+import SpecificFile from '../../components/SpecificFile.vue';
+import Navigation from '../../components/navigation.vue';
 
 export default {
-  name: "app",
-  components: {
-    SpecificFile,
-    Navigation
-  },
-  methods: {
-    authenticated() {
-      return localStorage.token;
-    }
-  }
+    name: 'app',
+    components: {
+        SpecificFile,
+        Navigation,
+    },
+    methods: {
+        // check the user has a token
+        authenticated() {
+            return localStorage.token;
+        },
+    },
 };
 </script>
 

@@ -110,6 +110,7 @@ export default {
         }
       },
       methods: {
+        // set the field to have the invalid styling if invalid or dirty
         getValidationClass(fieldName) {
           const field = this.$v.file[fieldName];
 
@@ -121,14 +122,17 @@ export default {
         },
         validateAdd(file) {
           this.$v.$touch();
-
+          // make sure none of the fields are invalid
           if (!this.$v.$invalid) {
+            // call the submitAddFile method
             this.submitAddFile(file);
           }
         },
         submitAddFile(newFile) {
+          // split the string at a comma and add to an array
           const keywords = newFile.keywords_tags.split(',');
           this.$axios
+            // add the new file to the database using the api
             .post("http://localhost:3030/files", {
               name_with_file_type: newFile.name_with_file_type,
               original_author: newFile.original_author,

@@ -6,7 +6,6 @@
 
 <script>
 import Login from '../../components/Login.vue';
-import Navigation from '../../components/navigation.vue';
 
 export default {
     name: 'app',

@@ -100,7 +100,6 @@ export default {
             },
     };
   },
-
   validations: {
     form: {
       title: {
@@ -115,6 +114,7 @@ export default {
     }
   },
   methods: {
+    // update the form properties using the file metadata properties so the form fields can be validated
     updateFormProperties(file) {
       const fileMetadata = file.metadata[file.metadata.length - 1];
       Object.keys(this.form).forEach(prop => {
@@ -125,6 +125,7 @@ export default {
     },
     submitEditSpecificFile(fileId, newVersion) {
       this.$axios
+        // update the file with the fileId using the api
         .put(`http://localhost:3030/files/${fileId}`, {
           locked: false,
           title: newVersion.title,
@@ -137,6 +138,7 @@ export default {
           file_size: newVersion.file_size
         })
         .then(response => {
+          // if sucessfully updated navigate to specific file screen for the file id
           window.location.href = `/specificFile/${fileId}`;
         })
         .catch(error => {
@@ -145,9 +147,12 @@ export default {
     },
     validateForm(fileId, file) {
       this.$v.form.$touch();
+      // if there are validation errors return
       if (this.$v.form.$error) return;
+      // else call the submitEditSpecificFile method
       this.submitEditSpecificFile(fileId, file);
     },
+    // set the field to have the invalid styling if invalid or dirty
     getValidationClass(fieldName) {
       const field = this.$v.form[fieldName];
 
@@ -159,13 +164,17 @@ export default {
     }
   },
   mounted() {
+    // get the fileId from the url
     const currentUrl = window.location.pathname.split("/");
     const fileId = currentUrl[2];
+    // lock the file so no one can edit or delete while user is editing
     this.$axios.put(`http://localhost:3030/files/${fileId}/lock`);
     this.$axios
+    // get the file from the database using the api 
       .get(`http://localhost:3030/files/${fileId}`) // Pass in ID as param
       .then(response => {
         this.file = response.data;
+        // set the form properties based off the response data 
         this.updateFormProperties(response.data);
       })
       .catch(error => {

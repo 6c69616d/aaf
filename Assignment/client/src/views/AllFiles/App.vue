@@ -21,6 +21,7 @@ export default {
     Navigation
   },
   methods: {
+    // see if the user is authenticated
     authenticated() {
       return localStorage.token;
     }
